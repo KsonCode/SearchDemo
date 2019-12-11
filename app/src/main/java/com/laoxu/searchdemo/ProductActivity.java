@@ -12,6 +12,8 @@ import com.laoxu.searchdemo.contract.IProductContract;
 import com.laoxu.searchdemo.model.entity.ProductEntity;
 import com.laoxu.searchdemo.presenter.ProductPresenter;
 
+import java.net.URLEncoder;
+
 public class ProductActivity extends AppCompatActivity implements IProductContract.IView {
 
     private ProductPresenter productPresenter;
@@ -39,7 +41,8 @@ public class ProductActivity extends AppCompatActivity implements IProductContra
 
 
 
-        String s = getIntent().getStringExtra("name");
+        //经过url编码的关键词：处理中文,不然出不来数据
+        String s = URLEncoder.encode(getIntent().getStringExtra("name"));
 
         String url = "http://172.17.8.100/small/commodity/v1/findCommodityByKeyword?keyword="+s+"&count=10&page=1";
         productPresenter.getProducts(url);
