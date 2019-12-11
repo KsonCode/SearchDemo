@@ -107,6 +107,7 @@ public class FlowLayout extends ViewGroup {
      */
     public void addChildView(String s) {
 
+        //动态创建textview，不清楚用户会添加几个子view
         final TextView textView = new TextView(getContext());
 
         //设置textview内边距
@@ -127,10 +128,27 @@ public class FlowLayout extends ViewGroup {
         textView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), textView.getText().toString(), Toast.LENGTH_SHORT).show();
+                //数据：textView.getText().toString()
+                //第四部，得到数据，通过接口传递出去
+                flowLayoutClickListener.clickListener(textView.getText().toString());
             }
         });
 
+    }
+
+    //第二步：声明接口
+    private FlowLayoutClickListener flowLayoutClickListener;
+    //第三步，初始化接口
+    public void setFlowLayoutClickListener(FlowLayoutClickListener flowLayoutClickListener) {
+        this.flowLayoutClickListener = flowLayoutClickListener;
+    }
+
+    /**
+     * 第一步：
+     * 创建接口类，并通过接口类的方法去传递数据
+     */
+    public interface FlowLayoutClickListener{
+        void clickListener(String s);
     }
 
 

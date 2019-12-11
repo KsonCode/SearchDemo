@@ -19,10 +19,10 @@ import com.laoxu.searchdemo.R;
  * 搜索控件：组合方式
  */
 public class SearchLayout extends LinearLayout {
-    private FlowLayout flowLayout;
-    private ImageView clearIv;
-    private TextView tv_search;
-    private EditText editText;
+    private FlowLayout flowLayout;//流式布局
+    private ImageView clearIv;//    清空数据
+    private TextView tv_search;//搜索按钮
+    private EditText editText;//输入框，搜索框，传递搜索的关键词
     public SearchLayout(Context context) {
         this(context,null);
     }
@@ -44,11 +44,11 @@ public class SearchLayout extends LinearLayout {
         View view = View.inflate(context, R.layout.search_layout,null);
         //把当前布局添加到当前组合控件之上
         addView(view);
-        flowLayout = findViewById(R.id.layout_flow);
+        flowLayout = view.findViewById(R.id.layout_flow);
         clearIv  = findViewById(R.id.clear);
         tv_search = findViewById(R.id.tv_search);
         editText = findViewById(R.id.et);
-
+//
         /**
          * 清空数据
          */
@@ -56,11 +56,12 @@ public class SearchLayout extends LinearLayout {
             @Override
             public void onClick(View v) {
 
+                //清空的是流式布局的子控件
                 flowLayout.clearViews();
 
             }
         });
-
+//
         tv_search.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +74,7 @@ public class SearchLayout extends LinearLayout {
             }
         });
     }
-
+//
     /**
      * 添加流式布局的对象
      * @param s
