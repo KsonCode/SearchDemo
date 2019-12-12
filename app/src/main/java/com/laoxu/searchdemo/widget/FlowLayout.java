@@ -1,5 +1,6 @@
 package com.laoxu.searchdemo.widget;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -120,6 +121,12 @@ public class FlowLayout extends ViewGroup {
         textView.setTextColor(Color.BLACK);
         //设置文字大小
         textView.setTextSize(12);
+
+
+        //旋转动画
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(textView,"rotation",0,360);
+        objectAnimator.setDuration(1000);
+        objectAnimator.start();
 
 
         //把子view加到容器

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,10 +47,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
      * @param position
      */
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
         Glide.with(context).load(list.get(position).getMasterPic()).into(holder.iv);
         holder.tv.setText(list.get(position).getCommodityName());
+
+//        //获取条目
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, list.get(position).getCommodityName(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (itemClickListener!=null){
+                    itemClickListener.itemClickListener(list.get(position).getCommodityName());
+                }
+
+            }
+        });
 
     }
 
@@ -71,5 +91,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         }
     }
 
+    //第二步声明
+    private ItemClickListener itemClickListener;
+
+    //第三步：提供public set方法，提供给接收方初始化接口对象
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    //第一步：创建接口类
+    public interface ItemClickListener{
+        //参数是商品标题
+        void itemClickListener(String name);
+    }
 
 }

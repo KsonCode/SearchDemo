@@ -4,6 +4,8 @@ import java.util.List;
 
 public class ProductEntity {
 
+
+
     private String message;
     private String status;
     private List<Product> result;

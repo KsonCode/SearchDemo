@@ -14,7 +14,7 @@ import com.laoxu.searchdemo.presenter.ProductPresenter;
 
 import java.net.URLEncoder;
 
-public class ProductActivity extends AppCompatActivity implements IProductContract.IView {
+public class ProductActivity extends AppCompatActivity implements IProductContract.IView  {
 
     private ProductPresenter productPresenter;
     private RecyclerView rv;
@@ -67,6 +67,15 @@ public class ProductActivity extends AppCompatActivity implements IProductContra
         rv.setAdapter(productAdapter);
 
 
+        //设置条目点击事件
+        productAdapter.setItemClickListener(new ProductAdapter.ItemClickListener() {
+            @Override
+            public void itemClickListener(String name) {
+                Toast.makeText(ProductActivity.this, name, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
 
@@ -74,4 +83,6 @@ public class ProductActivity extends AppCompatActivity implements IProductContra
     public void error(Throwable throwable) {
 
     }
+
+
 }
