@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlowLayout">
+<!--        颜色-->
+        <attr name="myTagColor" format="color"/>
+<!--        大小-->
+        <attr name="myTagSize" format="dimension"/>
+    </declare-styleable>
+    
+</resources>

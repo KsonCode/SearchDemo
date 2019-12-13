@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.laoxu.searchdemo.MainActivity;
 import com.laoxu.searchdemo.R;
 
-public class MyFragment extends Fragment {
+public class OtherFragment extends Fragment {
     private TextView tv;
 
 

@@ -9,12 +9,10 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.laoxu.searchdemo.view.fragment.SearchFragment;
-import com.laoxu.searchdemo.view.fragment.MyFragment;
+import com.laoxu.searchdemo.view.fragment.OtherFragment;
 
-import java.security.cert.PolicyQualifierInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private RadioGroup radioGroup;
     private List<Fragment> fragmentList ;
-    private SearchFragment searchFragment;
-    private MyFragment myFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +41,9 @@ public class MainActivity extends AppCompatActivity {
     protected void initData() {
         fragmentList = new ArrayList<>();
 
-        searchFragment = new SearchFragment();
-        myFragment = new MyFragment();
-        fragmentList.add(searchFragment);
-        fragmentList.add(myFragment);
+        fragmentList.add(new SearchFragment());
+        fragmentList.add(new OtherFragment());
+        fragmentList.add(new OtherFragment());
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @NonNull
@@ -99,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.radio_home:
                         viewPager.setCurrentItem(0);
                         break;
-                    case  R.id.radio_my:
+                    case  R.id.radio_bj:
+                        viewPager.setCurrentItem(1);
+                        break;
+                        case  R.id.radio_my:
                         viewPager.setCurrentItem(2);
                         break;
                 }
@@ -109,19 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * 跳转到第二个fragment
-     */
-    public void gotoFrament(String s){
-
-
-        viewPager.setCurrentItem(1);
-
-        Bundle args = new Bundle();
-        args.putString("keyword", s);
-        myFragment.setArguments(args);
-
-    }
 
 
 }

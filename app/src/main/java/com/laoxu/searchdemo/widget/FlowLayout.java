@@ -3,6 +3,7 @@ package com.laoxu.searchdemo.widget;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.laoxu.searchdemo.R;
+import com.laoxu.searchdemo.model.entity.ProductEntity;
+
+import java.util.List;
 
 
 /**
@@ -23,23 +27,42 @@ public class FlowLayout extends ViewGroup {
 
     private int horizontalSize = 30;//水平的间距
     private int verticalSize = 30;//垂直的间距
+    private int color;//颜色属性
+    private int size;
 
     public FlowLayout(Context context) {
         super(context);
+        init(context,null);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context,attrs);
     }
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context,attrs);
     }
 
     /**
      * 初始化数据
      */
-    public void init(){
+    public void init(Context context,AttributeSet attrs){
+
+        //得到自定义属性的数组，第一个是属性对象attrs，第二个是引用id
+        TypedArray typedArray = context.obtainStyledAttributes(attrs,R.styleable.FlowLayout);
+
+        //得到颜色值,第一个参数得到引用id，第二个默认值
+        color = typedArray.getColor(R.styleable.FlowLayout_myTagColor,Color.BLACK);
+
+        //得到大小值
+
+        size = typedArray.getDimensionPixelSize(R.styleable.FlowLayout_myTagSize,16);
+
+        typedArray.recycle();//数组用完，回收一下
+
+
 
     }
 
@@ -102,44 +125,51 @@ public class FlowLayout extends ViewGroup {
     }
 
 
+
     /**
-     * 动态添加子view
-     * @param s
+     * 动态添加集合的子view，一次添加多个子view
+     * @param
      */
-    public void addChildView(String s) {
+    public void addChildsView(List<ProductEntity.Product> list) {
 
-        //动态创建textview，不清楚用户会添加几个子view
-        final TextView textView = new TextView(getContext());
+        if (list!=null&&list.size()>0){
+            for (ProductEntity.Product product : list) {
+                //动态创建textview，不清楚用户会添加几个子view
+                final TextView textView = new TextView(getContext());
 
-        //设置textview内边距
-        textView.setPadding(20, 0, 20, 0);
-        //设置文本数据
-        textView.setText(s);
-        //设置背景
-        textView.setBackgroundResource(R.drawable.flowlayout_bg);
-        //设置文字颜色
-        textView.setTextColor(Color.BLACK);
-        //设置文字大小
-        textView.setTextSize(12);
-
-
-        //旋转动画
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(textView,"rotation",0,360);
-        objectAnimator.setDuration(1000);
-        objectAnimator.start();
+                //设置textview内边距
+                textView.setPadding(20, 0, 20, 0);
+                //设置文本数据
+                textView.setText(product.getCommodityName());
+                //设置背景
+                textView.setBackgroundResource(R.drawable.flowlayout_bg);
+                //设置文字颜色
+                textView.setTextColor(color);
+                //设置文字大小
+                textView.setTextSize(size);
 
 
-        //把子view加到容器
-        addView(textView);
+                //旋转动画
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(textView,"rotation",0,360);
+                objectAnimator.setDuration(1000);
+                objectAnimator.start();
 
-        textView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //数据：textView.getText().toString()
-                //第四部，得到数据，通过接口传递出去
-                flowLayoutClickListener.clickListener(textView.getText().toString());
+
+                //把子view加到容器
+                addView(textView);
+
+                textView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //数据：textView.getText().toString()
+                        //第四部，得到数据，通过接口传递出去
+                        flowLayoutClickListener.clickListener(textView.getText().toString());
+                    }
+                });
             }
-        });
+        }
+
+
 
     }
 
@@ -158,16 +188,4 @@ public class FlowLayout extends ViewGroup {
         void clickListener(String s);
     }
 
-
-
-    /**
-     * 清空所有数据的方法
-     */
-    public void clearViews(){
-
-        removeAllViews();//移除所有的子view
-
-
-
-    }
 }
